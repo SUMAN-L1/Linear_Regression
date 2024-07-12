@@ -1,4 +1,4 @@
-pip install scikit-learn
+pip! install scikit-learn
 venv\Scripts\activate
 pip show scikit-learn
 streamlit run LR.py
