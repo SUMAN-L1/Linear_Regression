@@ -1,3 +1,4 @@
 sklearn.linear_model
 sklearn.metrics
 pandas
+openpyxl
