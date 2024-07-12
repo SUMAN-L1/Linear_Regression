@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
+import statsmodels.api as sm
 
 def main():
-    st.title("Linear Regression Analysis")
+    st.title("Regression Analysis with Statsmodels")
 
     # Upload file
     uploaded_file = st.file_uploader("Upload a file", type=["csv", "xlsx", "xls"])
@@ -29,20 +28,19 @@ def main():
 
             # Check if columns are selected
             if feature_cols and target_col:
-                X = df[feature_cols].values
-                y = df[target_col].values
+                X = df[feature_cols]
+                y = df[target_col]
 
-                # Perform linear regression
-                model = LinearRegression()
-                model.fit(X, y)
+                # Add a constant to the model (intercept)
+                X = sm.add_constant(X)
+
+                # Perform regression
+                model = sm.OLS(y, X).fit()
                 y_pred = model.predict(X)
 
                 # Display metrics
-                st.subheader("Linear Regression Results")
-                st.write(f"Coefficients: {model.coef_}")
-                st.write(f"Intercept: {model.intercept_}")
-                st.write(f"Mean squared error: {mean_squared_error(y, y_pred):.2f}")
-                st.write(f"R2 score: {r2_score(y, y_pred):.2f}")
+                st.subheader("Regression Results")
+                st.write(model.summary())
 
                 # Plot actual vs. predicted values (for univariate case)
                 if len(feature_cols) == 1:
