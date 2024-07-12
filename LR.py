@@ -1,7 +1,3 @@
-pip! install scikit-learn
-venv\Scripts\activate
-pip show scikit-learn
-streamlit run LR.py
 import streamlit as st
 import pandas as pd
 import numpy as np
